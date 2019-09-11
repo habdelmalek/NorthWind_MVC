@@ -10,7 +10,7 @@ using System.Transactions;
 
 namespace DataAccessLayer
 {
-    public class UnitOfWork : IUnitOfWork
+    public partial class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext dbContext;
         private List<Action> _actions;
@@ -28,7 +28,7 @@ namespace DataAccessLayer
             {
                 this._actions =new  List<Action>();
             }
-            this._actions.Add(action)
+            this._actions.Add(action);
         }
 
         public void Dispose()
@@ -38,7 +38,7 @@ namespace DataAccessLayer
 
         public void Save()
         {
-            using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = IsolationLevel.ReadUncommitted }))
+            using (var scope = new TransactionScope(TransactionScopeOption.Required, new TransactionOptions { IsolationLevel = System.Transactions.IsolationLevel.ReadUncommitted }))
             {
                 this._actions?.ForEach(a => a.Invoke());
                 this.dbContext.SaveChanges();
