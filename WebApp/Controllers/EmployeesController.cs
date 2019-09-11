@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DataAccessLayer;
+using WebApp.Models.DTO;
 
 namespace WebApp.Controllers
 {
@@ -17,8 +18,23 @@ namespace WebApp.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            var employees = db.Employees.Include(e => e.Employee1);
+            //var employees = db.Employees.Include(e => e.Employee1);
+
+
+            var unitOfWork = new UnitOfWork();
+            var employees = unitOfWork.EmployeeRepository.GetAll()
+                .Select(emp => new Employee0
+                {
+                    EmployeeID = emp.EmployeeID,
+                    FirstName = emp.FirstName,
+                    LastName = emp.LastName,
+                    BirthDate = emp.BirthDate,
+                    Title = emp.Title,
+                    TitleOfCourtesy = emp.TitleOfCourtesy
+                });
             return View(employees.ToList());
+
+
         }
 
         // GET: Employees/Details/5
