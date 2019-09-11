@@ -42,6 +42,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,7 +54,6 @@
     <Compile Include="Category.cs">
       <DependentUpon>NorthWindDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="Customer.cs">
       <DependentUpon>NorthWindDataModel.tt</DependentUpon>
     </Compile>
@@ -63,6 +63,8 @@
     <Compile Include="Employee.cs">
       <DependentUpon>NorthWindDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IUnitOfWork.cs" />
     <Compile Include="NorthWindDataModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -91,6 +93,7 @@
     <Compile Include="Region.cs">
       <DependentUpon>NorthWindDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository.cs" />
     <Compile Include="Shipper.cs">
       <DependentUpon>NorthWindDataModel.tt</DependentUpon>
     </Compile>
@@ -100,6 +103,7 @@
     <Compile Include="Territory.cs">
       <DependentUpon>NorthWindDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="NorthWindDataModel.edmx">

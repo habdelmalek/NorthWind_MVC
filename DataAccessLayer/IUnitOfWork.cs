@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
-    public class Class1
+    public interface IUnitOfWork : IDisposable
     {
+        void Save();
+        void AddAction(Action action);
     }
 }
