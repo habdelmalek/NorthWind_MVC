@@ -6,9 +6,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ApplicationLayer;
 using AutoMapper;
 using DataAccessLayer;
-using WebApp.Models.DTO;
+
 
 
 namespace WebApp.Controllers
@@ -22,15 +23,7 @@ namespace WebApp.Controllers
         public ActionResult Index()
         {
             //var employees = db.Employees.Include(e => e.Employee1);
-            var employees = facade.GetAllEmployees().Select(emp => new Employee0
-            {
-                EmployeeID = emp.EmployeeID,
-                FirstName = emp.FirstName,
-                LastName = emp.LastName,
-                BirthDate = emp.BirthDate,
-                Title = emp.Title,
-                TitleOfCourtesy = emp.TitleOfCourtesy
-            });
+            var employees = facade.GetAllEmployees();
 
             return View(employees.ToList());
 
@@ -88,20 +81,16 @@ namespace WebApp.Controllers
             }
             var employee = facade.GetEmployeeById(id.Value);
 
-            //mapping emp--> emp edit
-            var config = new MapperConfiguration(cfg => cfg.CreateMap<Employee, Employee_Edit>());
 
-            var mapper = config.CreateMapper();
-            Employee_Edit emp = mapper.Map<Employee_Edit>(employee);
 
 
             var employees = facade.GetAllEmployees();
-            if (emp == null)
+            if (employee == null)
             {
                 return HttpNotFound();
             }
             ViewBag.ReportsTo = new SelectList(employees, "EmployeeID", "LastName", employee.ReportsTo);
-            return View(emp);
+            return View(employee);
         }
 
         // POST: Employees/Edit/5
@@ -109,21 +98,21 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Photo,Notes,ReportsTo")] Employee_Edit employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Photo,Notes,ReportsTo")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                var employeedb = facade.GetEmployeeById(employee.EmployeeID);
+                //var employeedb = facade.GetEmployeeById(employee.EmployeeID);
 
-                var config = new MapperConfiguration(cfg => cfg.CreateMap<Employee_Edit, Employee>());
+                //var config = new MapperConfiguration(cfg => cfg.CreateMap<Employee, Employee>());
 
-                var mapper = config.CreateMapper();
-                employeedb = mapper.Map<Employee>(employee);
+                //var mapper = config.CreateMapper();
+                //employeedb = mapper.Map<Employee>(employee);
 
-                facade.
+                //facade.em
 
-                //db.Entry(employee).State = EntityState.Modified;
-                //db.SaveChanges();
+                db.Entry(employee).State = EntityState.Modified;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.ReportsTo = new SelectList(db.Employees, "EmployeeID", "LastName", employee.ReportsTo);
