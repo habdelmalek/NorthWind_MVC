@@ -9,144 +9,100 @@
 <div>
     <h4>Employee</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
+    <div class="row">
+        <div class="col-8">
+            <div class="col">@Html.DisplayNameFor(model => model.LastName) : </div>
+            <div class="col">@Html.DisplayFor(model => model.LastName)</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            <div class="w-100"></div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+            <div class="col">@Html.DisplayNameFor(model => model.FirstName) : </div>
+            <div class="col">@Html.DisplayFor(model => model.FirstName)</div>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+        <div class="col-4">
+            <img src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Photo))">
+        </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TitleOfCourtesy)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.TitleOfCourtesy)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HireDate)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.HireDate)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.Title) : </div>
+        <div class="col-4">@Html.DisplayFor(model => model.Title)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.TitleOfCourtesy) : </div>
+        <div class="col">@Html.DisplayFor(model => model.TitleOfCourtesy)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.BirthDate) : </div>
+        <div class="col">@Html.DisplayFor(model => model.BirthDate)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Region)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Region)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.HireDate) : </div>
+        <div class="col">@Html.DisplayFor(model => model.HireDate)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PostalCode)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PostalCode)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.Address) : </div>
+        <div class="col">@Html.DisplayFor(model => model.Address)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Country)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Country)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.City) : </div>
+        <div class="col">@Html.DisplayFor(model => model.City)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.HomePhone)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.HomePhone)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.Region) : </div>
+        <div class="col">@Html.DisplayFor(model => model.Region)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Extension)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Extension)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.PostalCode) : </div>
+        <div class="col">@Html.DisplayFor(model => model.PostalCode)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Photo)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.Country) : </div>
+        <div class="col">@Html.DisplayFor(model => model.Country)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.HomePhone) : </div>
+        <div class="col">@Html.DisplayFor(model => model.HomePhone)</div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PhotoPath)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.PhotoPath)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.Extension) : </div>
+        <div class="col">@Html.DisplayFor(model => model.Extension) </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Employee1.LastName)
-        </dt>
+        <div class="w-100"></div>
 
-        <dd>
-            @Html.DisplayFor(model => model.Employee1.LastName)
-        </dd>
+        <div class="col-4">@Html.DisplayNameFor(model => model.Notes) : </div>
+        <div class="col"> @Html.DisplayFor(model => model.Notes)</div>
 
-    </dl>
+        <div class="w-100"></div>
+
+        <div class="col-4"> Reports to : </div>
+        <div class="col"> @Html.DisplayFor(model => model.Employee1.LastName)</div>
+
+        <div class="w-100"></div>
+
+        <div class="col-4"> </div>
+        <div class="col"> </div>
+    </div>
+
+
+
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeID }) |

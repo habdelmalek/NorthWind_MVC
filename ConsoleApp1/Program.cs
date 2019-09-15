@@ -1,9 +1,11 @@
-﻿using DataAccessLayer;
+﻿using ApplicationLayer;
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace ConsoleApp1
 {
@@ -11,18 +13,14 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            using (var unitOfWork = new UnitOfWork())
+            IFacade facade = new Facade();
+            var employees = facade.GetAllEmployees();
+            foreach (var item in employees)
             {
-                var emps = unitOfWork.EmployeeRepository.GetAll().Select(emp => emp.FirstName + " " + emp.LastName);
-
-                foreach (var item in emps)
-                {
-                    Console.WriteLine(item);
-                }
-
-                Console.ReadKey();
-
+                Console.WriteLine(item.FirstName);
             }
+
+            Console.ReadKey();
 
         }
     }

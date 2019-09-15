@@ -9,17 +9,17 @@ namespace DataAccessLayer
 {
     public interface IRepository<TEntity> where TEntity:class
     {
-        IEnumerable<TEntity> GetAll();
+        IQueryable<TEntity> GetAll();
 
-        TEntity Get(int id);
+        TEntity GetById(int id);
 
-        IEnumerable<TEntity> Find(Expression<Func<TEntity,bool>> predicate);
+        IQueryable<TEntity> Find(Expression<Func<TEntity,bool>> predicate);
+        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> selector);
 
         void Add(TEntity entity);
         void AddRange(IEnumerable<TEntity> entities);
 
-        void Remove(TEntity entity);
-        void RemoveRange(IEnumerable<TEntity> entities);
+        void Remove(int id);
 
         void Remove(Expression<Func<TEntity, bool>> predicate);
     }

@@ -1,20 +1,30 @@
-﻿using System;
+﻿using LinqKit;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccessLayer
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
-    {
 
-        protected  readonly DbContext Context;
+    {
+        protected readonly DbContext Context;
         public Repository(DbContext dbContext)
         {
             Context = dbContext;
+        }
+
+        public IQueryable<TEntity> GetAll()
+        {
+            return ((DbQuery<TEntity>)Context.Set<TEntity>().AsNoTracking<TEntity>()).AsExpandable();
+        }
+
+        public TEntity GetById(int id)
+        {
+            return Context.Set<TEntity>().Find(id);
         }
 
         public void Add(TEntity entity)
@@ -27,23 +37,33 @@ namespace DataAccessLayer
             Context.Set<TEntity>().AddRange(entities);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
+        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return Context.Set<TEntity>().Where(predicate);
+            return Find(predicate, null);
         }
 
-        public TEntity Get(int id)
+        public IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, Expression<Func<TEntity, TEntity>> selector)
         {
-            return Context.Set<TEntity>().Find(id);
+            if (predicate == null)
+                predicate = x => true;
+
+            IQueryable<TEntity> q;
+
+            if (selector == null)
+            {
+                q = ((DbQuery<TEntity>)Context.Set<TEntity>().AsNoTracking<TEntity>()).Where(predicate);
+            }
+            else {
+                q = ((DbQuery<TEntity>)Context.Set<TEntity>().AsNoTracking<TEntity>()).Where(predicate).Select(selector);
+            }
+            return q;
         }
 
-        public IEnumerable<TEntity> GetAll()
-        {
-            return Context.Set<TEntity>().ToList();
-        }
 
-        public void Remove(TEntity entity)
+
+        public void Remove(int id)
         {
+            var entity = this.GetById(id);
             Context.Set<TEntity>().Remove(entity);
         }
 
@@ -51,10 +71,6 @@ namespace DataAccessLayer
         {
             Context.Set<TEntity>().RemoveRange(Context.Set<TEntity>().Where(predicate));
         }
-
-        public void RemoveRange(IEnumerable<TEntity> entities)
-        {
-            Context.Set<TEntity>().RemoveRange(entities);
-        }
+        
     }
 }

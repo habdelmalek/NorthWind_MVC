@@ -30,7 +30,7 @@
 
 
                                 <li class="nav-item">
-                                    @Html.ActionLink("Employees2", "Index","Employees", null, new { @class = "nav-link" })
+                                    @Html.ActionLink("Employees", "Index", "Employees", null, new { @class = "nav-link" })
                                 </li>
                             </ul>
                         </div>
@@ -49,5 +49,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/site")
+
 </body>
 </html>

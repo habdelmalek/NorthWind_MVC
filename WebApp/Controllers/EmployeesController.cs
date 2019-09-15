@@ -6,32 +6,32 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using DataAccessLayer;
 using WebApp.Models.DTO;
+
 
 namespace WebApp.Controllers
 {
     public class EmployeesController : Controller
     {
         private NWContext db = new NWContext();
+        IFacade facade = new Facade();
 
         // GET: Employees
         public ActionResult Index()
         {
             //var employees = db.Employees.Include(e => e.Employee1);
+            var employees = facade.GetAllEmployees().Select(emp => new Employee0
+            {
+                EmployeeID = emp.EmployeeID,
+                FirstName = emp.FirstName,
+                LastName = emp.LastName,
+                BirthDate = emp.BirthDate,
+                Title = emp.Title,
+                TitleOfCourtesy = emp.TitleOfCourtesy
+            });
 
-
-            var unitOfWork = new UnitOfWork();
-            var employees = unitOfWork.EmployeeRepository.GetAll()
-                .Select(emp => new Employee0
-                {
-                    EmployeeID = emp.EmployeeID,
-                    FirstName = emp.FirstName,
-                    LastName = emp.LastName,
-                    BirthDate = emp.BirthDate,
-                    Title = emp.Title,
-                    TitleOfCourtesy = emp.TitleOfCourtesy
-                });
             return View(employees.ToList());
 
 
@@ -44,7 +44,8 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
+            var employee = facade.GetEmployeeById(id.Value);
+
             if (employee == null)
             {
                 return HttpNotFound();
@@ -77,6 +78,7 @@ namespace WebApp.Controllers
             return View(employee);
         }
 
+
         // GET: Employees/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -84,13 +86,22 @@ namespace WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = db.Employees.Find(id);
-            if (employee == null)
+            var employee = facade.GetEmployeeById(id.Value);
+
+            //mapping emp--> emp edit
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Employee, Employee_Edit>());
+
+            var mapper = config.CreateMapper();
+            Employee_Edit emp = mapper.Map<Employee_Edit>(employee);
+
+
+            var employees = facade.GetAllEmployees();
+            if (emp == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ReportsTo = new SelectList(db.Employees, "EmployeeID", "LastName", employee.ReportsTo);
-            return View(employee);
+            ViewBag.ReportsTo = new SelectList(employees, "EmployeeID", "LastName", employee.ReportsTo);
+            return View(emp);
         }
 
         // POST: Employees/Edit/5
@@ -98,12 +109,21 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeID,LastName,FirstName,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Photo,Notes,ReportsTo,PhotoPath")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Photo,Notes,ReportsTo")] Employee_Edit employee)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
-                db.SaveChanges();
+                var employeedb = facade.GetEmployeeById(employee.EmployeeID);
+
+                var config = new MapperConfiguration(cfg => cfg.CreateMap<Employee_Edit, Employee>());
+
+                var mapper = config.CreateMapper();
+                employeedb = mapper.Map<Employee>(employee);
+
+                facade.
+
+                //db.Entry(employee).State = EntityState.Modified;
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
             ViewBag.ReportsTo = new SelectList(db.Employees, "EmployeeID", "LastName", employee.ReportsTo);
