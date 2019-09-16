@@ -12,6 +12,7 @@ namespace DataAccessLayer
 
     {
         protected readonly DbContext Context;
+
         public Repository(DbContext dbContext)
         {
             Context = dbContext;
@@ -29,7 +30,10 @@ namespace DataAccessLayer
 
         public void Add(TEntity entity)
         {
-            Context.Set<TEntity>().Add(entity);
+            if (entity == null)
+                throw new ArgumentNullException();
+
+            var result = Context.Set<TEntity>().Add(entity);
         }
 
         public void AddRange(IEnumerable<TEntity> entities)
@@ -53,13 +57,12 @@ namespace DataAccessLayer
             {
                 q = ((DbQuery<TEntity>)Context.Set<TEntity>().AsNoTracking<TEntity>()).Where(predicate);
             }
-            else {
+            else
+            {
                 q = ((DbQuery<TEntity>)Context.Set<TEntity>().AsNoTracking<TEntity>()).Where(predicate).Select(selector);
             }
             return q;
         }
-
-
 
         public void Remove(int id)
         {
@@ -71,6 +74,5 @@ namespace DataAccessLayer
         {
             Context.Set<TEntity>().RemoveRange(Context.Set<TEntity>().Where(predicate));
         }
-        
     }
 }

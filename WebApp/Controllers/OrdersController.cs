@@ -9,10 +9,10 @@ namespace WebApp.Controllers
 {
     public class OrdersController : Controller
     {
+        UnitOfWork unitOfWork = new UnitOfWork();
         // GET: Orders
         public ActionResult Index()
         {
-            var unitOfWork = new UnitOfWork();
 
             var emps = unitOfWork.EmployeeRepository.GetAll().Select(emp => emp.FirstName + " " + emp.LastName).ToList();
 

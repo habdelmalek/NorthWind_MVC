@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ApplicationLayer;
-using AutoMapper;
+using ApplicationLayer.DTOs;
 using DataAccessLayer;
 
 
@@ -18,6 +18,7 @@ namespace WebApp.Controllers
     {
         private NWContext db = new NWContext();
         IFacade facade = new Facade();
+        UnitOfWork unitOfWork = new UnitOfWork();
 
         // GET: Employees
         public ActionResult Index()
@@ -60,14 +61,19 @@ namespace WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EmployeeID,LastName,FirstName,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Photo,Notes,ReportsTo,PhotoPath")] Employee employee)
         {
+            
             if (ModelState.IsValid)
             {
-                db.Employees.Add(employee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var added = facade.AddEmployee(employee);
+                //db.Employees.Add(employee);
+                //db.SaveChanges();
+                if (added)
+                {
+                    return RedirectToAction("Index");
+                }
             }
-
-            ViewBag.ReportsTo = new SelectList(db.Employees, "EmployeeID", "LastName", employee.ReportsTo);
+            var employees = facade.GetAllEmployees().ToList();
+            ViewBag.ReportsTo = new SelectList(employees, "EmployeeID", "LastName", employee.ReportsTo);
             return View(employee);
         }
 
@@ -98,20 +104,20 @@ namespace WebApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Photo,Notes,ReportsTo")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId, LastName, FirstName,Title,TitleOfCourtesy,BirthDate,HireDate,Address,City,Region,PostalCode,Country,HomePhone,Extension,Photo,Notes,ReportsTo")] EmployeeDTO1 employee)
         {
             if (ModelState.IsValid)
             {
-                //var employeedb = facade.GetEmployeeById(employee.EmployeeID);
+
+                var employeedb = facade.GetEmployeeRecord(employee.EmployeeID);
 
                 //var config = new MapperConfiguration(cfg => cfg.CreateMap<Employee, Employee>());
 
                 //var mapper = config.CreateMapper();
-                //employeedb = mapper.Map<Employee>(employee);
+                employeedb = Mapper.Map<Employee>(employee);
 
-                //facade.em
+                db.Entry(employeedb).State = EntityState.Modified;
 
-                db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

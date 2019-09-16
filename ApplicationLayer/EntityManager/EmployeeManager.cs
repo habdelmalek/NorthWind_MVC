@@ -1,4 +1,5 @@
-﻿using DataAccessLayer;
+﻿using ApplicationLayer.DTOs;
+using DataAccessLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,16 +16,21 @@ namespace ApplicationLayer.EntityManager
             unitOfWork = _unitOfWork as UnitOfWork;
         }
 
-        public IEnumerable<Employee> GetAllEmployees()
+        public IEnumerable<EmployeeDTO> GetAllEmployees()
         {
-            var employees = unitOfWork.EmployeeRepository.GetAll();
-            return employees.ToList();
+            var employees = unitOfWork.EmployeeRepository.GetAll().ToList();
+
+            List<EmployeeDTO> emps = Mapper.Map<List<EmployeeDTO>>(employees);
+            return emps;
         }
 
-        public Employee GetEmployeeById(int id)
+        public EmployeeDTO1 GetEmployeeById(int id)
         {
             var employee = unitOfWork.EmployeeRepository.GetById(id);
-            return employee;
+
+            EmployeeDTO1 emp = Mapper.Map<EmployeeDTO1>(employee);
+
+            return emp;
         }
 
         public bool AddEmployee(Employee employee)
@@ -70,6 +76,12 @@ namespace ApplicationLayer.EntityManager
         {
             List<Employee> employees = new List<Employee>();
             return employees = unitOfWork.EmployeeRepository.Find(predicate, selector).ToList();
+        }
+
+        public Employee GetEmployeeRecord(int id)
+        {
+            return unitOfWork.EmployeeRepository.GetById(id);
+
         }
     }
 }

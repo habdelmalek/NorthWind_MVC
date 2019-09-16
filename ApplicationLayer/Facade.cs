@@ -1,4 +1,5 @@
-﻿using ApplicationLayer.EntityManager;
+﻿using ApplicationLayer.DTOs;
+using ApplicationLayer.EntityManager;
 using DataAccessLayer;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,13 @@ namespace ApplicationLayer
 {
     public interface IFacade
     {
-        IEnumerable<Employee> GetAllEmployees();
+        #region EmployeeFunctions
 
-        Employee GetEmployeeById(int id);
+        IEnumerable<EmployeeDTO> GetAllEmployees();
+
+        EmployeeDTO1 GetEmployeeById(int id);
+
+        Employee GetEmployeeRecord(int id);
 
         bool AddEmployee(Employee employee);
 
@@ -22,6 +27,8 @@ namespace ApplicationLayer
         bool DeleteEmployees(List<int> ids);
 
         List<Employee> FindEmployees(Expression<Func<Employee, bool>> predicate, Expression<Func<Employee, Employee>> selector);
+        #endregion
+
     }
 
     public class Facade : IFacade
@@ -31,38 +38,58 @@ namespace ApplicationLayer
         public bool AddEmployee(Employee employee)
         {
             var employeeManager = new EmployeeManager(unitOfWork);
-            return employeeManager.AddEmployee(employee);
+
+            var add= employeeManager.AddEmployee(employee);
+            unitOfWork.Save();
+            return add;
         }
 
         public bool DeleteEmployee(int id)
         {
             var employeeManager = new EmployeeManager(unitOfWork);
-            return employeeManager.DeleteEmployee(id);
+            var del = employeeManager.DeleteEmployee(id);
+            unitOfWork.Save();
+            return del;
         }
 
         public bool DeleteEmployees(List<int> ids)
         {
             Expression<Func<Employee, bool>> predicate = emp => ids.Any(id => id == emp.EmployeeID);
             var employeeManager = new EmployeeManager(unitOfWork);
-            return employeeManager.DeleteEmployees(predicate);
+            var del =  employeeManager.DeleteEmployees(predicate);
+            unitOfWork.Save();
+            return del;
         }
 
         public List<Employee> FindEmployees(Expression<Func<Employee, bool>> predicate, Expression<Func<Employee, Employee>> selector)
         {
             var employeeManager = new EmployeeManager(unitOfWork);
-            return employeeManager.Find(predicate, selector).ToList<Employee>();
+            var emps= employeeManager.Find(predicate, selector).ToList<Employee>();
+            unitOfWork.Save();
+            return emps;
         }
 
-        public IEnumerable<Employee> GetAllEmployees()
+        public IEnumerable<EmployeeDTO> GetAllEmployees()
         {
             var employeeManager = new EmployeeManager(unitOfWork);
-            return employeeManager.GetAllEmployees();
+            var emps= employeeManager.GetAllEmployees();
+            unitOfWork.Save();
+            return emps;
         }
 
-        public Employee GetEmployeeById(int id)
+        public Employee GetEmployeeRecord(int id)
         {
             var employeeManager = new EmployeeManager(unitOfWork);
-            return employeeManager.GetEmployeeById(id);
+            return employeeManager.GetEmployeeRecord(id);
+
+        }
+
+        public EmployeeDTO1 GetEmployeeById(int id)
+        {
+            var employeeManager = new EmployeeManager(unitOfWork);
+            var emp= employeeManager.GetEmployeeById(id);
+            unitOfWork.Save();
+            return emp;
         }
     }
 }

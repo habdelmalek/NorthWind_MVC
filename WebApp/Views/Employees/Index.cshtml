@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DataAccessLayer.Employee>
+﻿@model IEnumerable<ApplicationLayer.DTOs.EmployeeDTO>
 
 @{
     ViewBag.Title = "Index";
@@ -16,6 +16,7 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FirstName)
+            
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
