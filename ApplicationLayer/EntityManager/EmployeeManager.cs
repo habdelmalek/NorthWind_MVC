@@ -72,6 +72,14 @@ namespace ApplicationLayer.EntityManager
             }
         }
 
+        public IEnumerable<EmployeeDTO> Find(Expression<Func<Employee, bool>> predicate)
+        {
+            List<Employee> employees = new List<Employee>();
+            employees = unitOfWork.EmployeeRepository.Find(predicate).ToList();
+            List<EmployeeDTO> emps = Mapper.Map<List<EmployeeDTO>>(employees);
+            return emps;
+        }
+
         public IEnumerable<Employee> Find(Expression<Func<Employee, bool>> predicate, Expression<Func<Employee, Employee>> selector)
         {
             List<Employee> employees = new List<Employee>();

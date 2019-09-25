@@ -25,6 +25,7 @@ namespace ApplicationLayer
         bool DeleteEmployee(int id);
 
         bool DeleteEmployees(List<int> ids);
+        List<EmployeeDTO> FindEmployees(Expression<Func<Employee, bool>> predicate);
 
         List<Employee> FindEmployees(Expression<Func<Employee, bool>> predicate, Expression<Func<Employee, Employee>> selector);
         #endregion
@@ -60,6 +61,15 @@ namespace ApplicationLayer
             unitOfWork.Save();
             return del;
         }
+
+        public List<EmployeeDTO> FindEmployees(Expression<Func<Employee, bool>> predicate)
+        {
+            var employeeManager = new EmployeeManager(unitOfWork);
+            var emps = employeeManager.Find(predicate).ToList();
+            unitOfWork.Save();
+            return emps;
+        }
+
 
         public List<Employee> FindEmployees(Expression<Func<Employee, bool>> predicate, Expression<Func<Employee, Employee>> selector)
         {

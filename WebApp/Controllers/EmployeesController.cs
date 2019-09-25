@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -21,14 +22,16 @@ namespace WebApp.Controllers
         UnitOfWork unitOfWork = new UnitOfWork();
 
         // GET: Employees
-        public ActionResult Index()
+        public ActionResult Index(string txtSearch)
         {
-            //var employees = db.Employees.Include(e => e.Employee1);
-            var employees = facade.GetAllEmployees();
+            Expression<Func<Employee, bool>> predicate = emp => true;
+            if (! string.IsNullOrEmpty(txtSearch))
+            {
+                predicate = emp => emp.FirstName.Contains(txtSearch) || emp.LastName.Contains(txtSearch);
+            }
+            var employees = facade.FindEmployees(predicate);
 
             return View(employees.ToList());
-
-
         }
 
         // GET: Employees/Details/5

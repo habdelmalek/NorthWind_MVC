@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @Mvc.RazorTools.BundleManager.Styles.Render()
 </head>
 <body>
     <div class="container body-content">
@@ -48,8 +50,12 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+    @Styles.Render("~/Content/datatables")
+    @Scripts.Render("~/bundles/datatables")
+
     @Scripts.Render("~/bundles/site")
+
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>

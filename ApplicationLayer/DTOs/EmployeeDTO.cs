@@ -27,9 +27,12 @@ namespace ApplicationLayer.DTOs
         public string TitleOfCourtesy { get; set; }
 
         [DisplayName("Birth Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public Nullable<System.DateTime> BirthDate { get; set; }
 
         [DisplayName("Hire Date")]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public Nullable<System.DateTime> HireDate { get; set; }
     //    public string Address { get; set; }
     //    public string City { get; set; }
