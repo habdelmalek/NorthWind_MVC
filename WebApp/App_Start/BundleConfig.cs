@@ -22,24 +22,9 @@ namespace WebApp
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
-
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
+                      "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-
-            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
-            "~/Scripts/DataTables/jquery.dataTables.min.js",
-            "~/Scripts/DataTables/dataTables.bootstrap.js"));
-
-            bundles.Add(new StyleBundle("~/Content/datatables").Include(
-          "~/Content/DataTables/css/dataTables.bootstrap.css"));
-
-
-            bundles.Add(new ScriptBundle("~/bundles/site").Include(
-            "~/Scripts/Site.js"));
-
-
         }
     }
 }

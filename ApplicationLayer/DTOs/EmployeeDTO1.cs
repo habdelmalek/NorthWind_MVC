@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataAccessLayer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -27,9 +28,13 @@ namespace ApplicationLayer.DTOs
         public string TitleOfCourtesy { get; set; }
 
         [DisplayName("Birth Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public Nullable<System.DateTime> BirthDate { get; set; }
 
         [DisplayName("Hire Date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public Nullable<System.DateTime> HireDate { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -45,5 +50,9 @@ namespace ApplicationLayer.DTOs
         [DisplayName("Reports To")]
         public Nullable<int> ReportsTo { get; set; }
         //public string PhotoPath { get; set; }
+        //---------------------------------------------------------------------------
+
+        public Employee Employee1 { get; set; }
+        
     }
 }

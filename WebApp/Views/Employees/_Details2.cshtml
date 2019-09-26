@@ -1,16 +1,9 @@
 ﻿@model ApplicationLayer.DTOs.EmployeeDTO1
 
 <div>
-    @{
-        var name = Model.FirstName + " " + Model.LastName;
-        ViewBag.Title = name;
-    }
-
-    <h4><b>@name</b></h4>
-    <hr />
 
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div class="row">
                 <div class="col-md-2 font-weight-bolder">
                     @Html.DisplayNameFor(model => model.LastName) :
@@ -109,7 +102,7 @@
 
                     @{
                         var reportsTo = "";
-                        if (Model.ReportsTo !=null)
+                        if (Model.ReportsTo != null)
                         {
                             reportsTo = Model.Employee1.FirstName + " " + Model.Employee1.LastName;
                         }
@@ -125,6 +118,6 @@
     </div>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeID }) 
+    @*@Html.ActionLink("Back to List", "Index")*@
 </p>

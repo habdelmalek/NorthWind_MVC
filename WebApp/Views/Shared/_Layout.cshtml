@@ -5,57 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 
-    @Mvc.RazorTools.BundleManager.Styles.Render()
+    <link href="~/Content/all.css" rel="stylesheet" />
+
+    @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="container body-content">
-        @Html.Partial("_TopNavBar")
 
-        <div class="container-fluid2">
-            <div class="row" style="height:1000px">
-                <div class="col-lg-3">
-                    <nav class=" d-none d-md-block bg-light sidebar" style="height:100%">
-                        <div class="sidebar-sticky">
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">
-                                        Dashboard <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Orders
-                                    </a>
-                                </li>
+    @Html.Partial("_HMenu")
 
-
-                                <li class="nav-item">
-                                    @Html.ActionLink("Employees", "Index", "Employees", null, new { @class = "nav-link" })
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                </div>
-
-                <div class="col-md-9 ml-sm-auto col-lg-9 px-4">
-                    @RenderBody()
-                </div>
-            </div>
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    
+                    <a class="nav-link active" href="@Url.Action("index","Employees")">
+                        <i class="fas fa-users">  </i>
+                    Employees
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+            </ul>
         </div>
 
-
+        <div class="col-md-10">
+            @RenderBody()
+        </div>
     </div>
+
+
+
+    
+
+
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Styles.Render("~/Content/datatables")
-    @Scripts.Render("~/bundles/datatables")
-
-    @Scripts.Render("~/bundles/site")
-
     @RenderSection("scripts", required: false)
-
 </body>
 </html>

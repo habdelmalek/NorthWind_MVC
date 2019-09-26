@@ -1,21 +1,12 @@
 ﻿body {
-    padding-top: 0px;
+    padding-top: 50px;
     padding-bottom: 20px;
-    height: 1000px;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-}
-
-.container-fluid2 {
-    width: 100%;
-    padding-right: 0;
-    padding-left: 0;
-    margin-right: auto;
-    margin-left: auto;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -27,12 +18,7 @@
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
-select {
-    max-width: 280px;
-}
-
-
+select,
 textarea {
-    max-width: 531px;
-    width:100%;
+    max-width: 280px;
 }
